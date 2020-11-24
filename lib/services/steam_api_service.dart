@@ -1,9 +1,8 @@
-import 'package:steam_lib/models/steam_friends.dart';
 import 'package:steam_lib/models/steam_games.dart';
 import 'package:steam_lib/models/steam_user.dart';
 
 abstract class ISteamApiService {
-  Future<SteamUser> getUserProfileAsync(String steamId);
-  Future<SteamFriends> getFriendsProfileAsync(String steamId);
-  Future<SteamGames> getGamesLibraryAsync(String steamId);
+  Future<ProfileDisplay> getUserProfileAsync(String steamId);
+  Future<List<ProfileDisplay>> getFriendsProfileAsync(String steamId);
+  Future<List<Game>> getGamesLibraryAsync(String steamId);
 }

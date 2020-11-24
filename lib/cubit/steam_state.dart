@@ -16,7 +16,7 @@ class SteamUserLoading extends SteamState {
 }
 
 class SteamUserLoaded extends SteamState {
-  final SteamUser steamUser;
+  final ProfileDisplay steamUser;
   const SteamUserLoaded({@required this.steamUser});
   @override
   List<Object> get props => [steamUser];
@@ -36,7 +36,7 @@ class SteamFriendsLoading extends SteamState {
 }
 
 class SteamFriendsLoaded extends SteamState {
-  final SteamFriends steamFriends;
+  final List<ProfileDisplay> steamFriends;
   const SteamFriendsLoaded({@required this.steamFriends});
   @override
   List<Object> get props => [steamFriends];
@@ -56,7 +56,7 @@ class SteamGamesLoading extends SteamState {
 }
 
 class SteamGamesLoaded extends SteamState {
-  final SteamGames steamGames;
+  final List<Game> steamGames;
   const SteamGamesLoaded({@required this.steamGames});
   @override
   List<Object> get props => [steamGames];

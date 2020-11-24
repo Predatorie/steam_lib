@@ -12,7 +12,9 @@ dependencies:
   flutter_bloc: ^6.1.1
   bloc: ^6.1.0
   equatable: ^1.2.5
-  dio: ^3.0.10
+  http: ^0.12.2
+  intl: ^0.16.1
+  duration: ^2.0.15
 dev_dependencies:
   flutter_test:
     sdk: flutter

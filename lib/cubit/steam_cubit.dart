@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:steam_lib/exceptions/network_exception.dart';
-import 'package:steam_lib/models/steam_friends.dart';
 import 'package:steam_lib/models/steam_games.dart';
 import 'package:steam_lib/models/steam_user.dart';
 import 'package:steam_lib/repositories/steam_repository.dart';

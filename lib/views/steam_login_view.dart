@@ -21,14 +21,14 @@ class SteamLoginView extends StatelessWidget {
           },
           builder: (BuildContext context, state) {
             if (state is SteamInitial) {
-              return buildInitialInput();
+              return buildInitialInput(context);
             } else if (state is SteamUserLoading) {
               return buildLoading();
             } else if (state is SteamUserLoaded) {
-              return null;
+              return buildLoadedState(state);
             } else {
               // (state is WeatherError)
-              return buildInitialInput();
+              return buildInitialInput(context);
             }
           },
         ),
@@ -36,8 +36,11 @@ class SteamLoginView extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.deepPurpleAccent,
         label: Text('Connect'),
-        icon: Icon(Icons.login),
-        onPressed: () {},
+        icon: Icon(Icons.games),
+        onPressed: () async {
+          final steamCubit = context.read<SteamCubit>();
+          await steamCubit.getUserProfile('76561197985266024');
+        },
       ),
     );
   }
@@ -47,8 +50,32 @@ Widget buildLoading() => Center(
       child: CircularProgressIndicator(),
     );
 
-Widget buildInitialInput() {
+Widget buildInitialInput(BuildContext context) {
   return Container(
     color: Colors.deepPurple,
+  );
+}
+
+Widget buildLoadedState(SteamUserLoaded state) {
+  return Container(
+    color: Colors.deepPurple,
+    child: Center(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Image.network(state.steamUser.avatarmedium),
+          Text(
+            state.steamUser.personaname,
+            style: TextStyle(color: Colors.white, fontSize: 32),
+          ),
+          Text(
+            state.steamUser.lastlogoff,
+            style: TextStyle(color: Colors.white, fontSize: 22),
+          ),
+        ],
+      ),
+    ),
   );
 }
