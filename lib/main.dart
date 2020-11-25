@@ -7,11 +7,27 @@ import 'package:steam_lib/services/formatter_service.dart';
 import 'package:steam_lib/views/steam_login_view.dart';
 
 void main() {
-  runApp(MyApp());
+  final httpClient = http.Client();
+  final formatterService = FormatterService();
+  final steamRepository =
+      SteamRepository(formatterService: formatterService, client: httpClient);
+
+  runApp(SteameoApp(
+    steamRepository: steamRepository,
+  ));
 }
 
-class MyApp extends StatelessWidget {
+class SteameoApp extends StatefulWidget {
+  final SteamRepository steamRepository;
+
+  const SteameoApp({Key key, @required this.steamRepository}) : super(key: key);
+
   // This widget is the root of your application.
+  @override
+  _SteameoAppState createState() => _SteameoAppState();
+}
+
+class _SteameoAppState extends State<SteameoApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,9 +37,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider(
-        create: (BuildContext context) => SteamCubit(SteamRepository(
-            client: http.Client(), formatterService: FormatterService())),
-        child: SteamLoginView(),
+        create: (_) => SteamCubit(widget.steamRepository),
+        child: SteamLoginPage(),
       ),
     );
   }

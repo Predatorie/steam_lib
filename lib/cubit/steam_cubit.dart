@@ -19,7 +19,7 @@ class SteamCubit extends Cubit<SteamState> {
       final profile = await _steamRepository.getUserProfileAsync(steamId);
       emit(SteamUserLoaded(steamUser: profile));
     } on NetworkException catch (e) {
-      emit(SteamUserError(errorMessage: e.toString()));
+      emit(SteamUserError(errorMessage: e.message));
     }
   }
 
@@ -29,7 +29,7 @@ class SteamCubit extends Cubit<SteamState> {
       final friends = await _steamRepository.getFriendsProfileAsync(steamId);
       emit(SteamFriendsLoaded(steamFriends: friends));
     } on NetworkException catch (e) {
-      emit(SteamFriendsError(errorMessage: e.toString()));
+      emit(SteamFriendsError(errorMessage: e.message));
     }
   }
 
@@ -39,7 +39,7 @@ class SteamCubit extends Cubit<SteamState> {
       final games = await _steamRepository.getGamesLibraryAsync(steamId);
       emit(SteamGamesLoaded(steamGames: games));
     } on NetworkException catch (e) {
-      emit(SteamGamesError(errorMessage: e.toString()));
+      emit(SteamGamesError(errorMessage: e.message));
     }
   }
 }
