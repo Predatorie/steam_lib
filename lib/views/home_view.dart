@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:steam_lib/cubit/steam_cubit.dart';
+import 'package:steam_lib/models/steam_user.dart';
 
-class HomeView extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final steamCubit = BlocProvider.of<SteamCubit>(context);
+    final ProfileDisplay profile = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('HOME'),
+        title: Text(profile.personaname),
         backgroundColor: Colors.deepPurple,
       ),
-      body: buildLoadedState(steamCubit.state),
+      body: Center(
+          child: _HomeView(
+        profile: profile,
+      )),
     );
   }
 }
 
-Widget buildLoadedState(SteamUserLoaded state) {
+class _HomeView extends StatelessWidget {
+  final ProfileDisplay profile;
+
+  const _HomeView({
+    Key key,
+    @required this.profile,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildLoadedState(profile);
+  }
+}
+
+Widget _buildLoadedState(ProfileDisplay profile) {
   return Container(
     color: Colors.deepPurple,
     child: Center(
@@ -25,13 +41,13 @@ Widget buildLoadedState(SteamUserLoaded state) {
           SizedBox(
             height: 20,
           ),
-          Image.network(state.steamUser.avatarmedium),
+          Image.network(profile.avatarmedium),
           Text(
-            state.steamUser.personaname,
+            profile.personaname,
             style: TextStyle(color: Colors.white, fontSize: 32),
           ),
           Text(
-            state.steamUser.lastlogoff,
+            profile.lastlogoff,
             style: TextStyle(color: Colors.white, fontSize: 22),
           ),
         ],

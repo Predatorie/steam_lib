@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:steam_lib/cubit/steam_cubit.dart';
 import 'package:steam_lib/repositories/steam_repository.dart';
 import 'package:steam_lib/services/formatter_service.dart';
+import 'package:steam_lib/views/home_view.dart';
+import 'package:steam_lib/views/splash_screen.dart';
 import 'package:steam_lib/views/steam_login_view.dart';
 
 void main() {
@@ -36,6 +38,11 @@ class _SteameoAppState extends State<SteameoApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: {
+        '/splash': (context) => SplashPage(),
+        '/login': (context) => SteamLoginPage(),
+        '/home': (context) => HomePage(),
+      },
       home: BlocProvider(
         create: (_) => SteamCubit(widget.steamRepository),
         child: SteamLoginPage(),

@@ -43,16 +43,11 @@ class _SteamLoginPageState extends State<SteamLoginPage> {
           ),
           onPressed: () async {
             if (_steamIdController.text.isNotEmpty) {
-              final steamCubit = context.read<SteamCubit>();
-              if (steamCubit.state != SteamUserLoading()) {
-                // valid
-                // await steamCubit.getUserProfile('76561197985266024');
-                // invalid
-                await steamCubit.getUserProfile(_steamIdController.text);
-              } else {
-                print(
-                    'ignoring onPressed already fired... connection in progress.');
-              }
+              context
+                  .read<SteamCubit>()
+                  .getUserProfile(_steamIdController.text);
+
+              /// 76561197985266024
             } else {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: const Duration(seconds: 1),
@@ -132,7 +127,10 @@ Widget _buildInitialInput(TextEditingController controller) {
 class _SteamLoginView extends StatelessWidget {
   final TextEditingController controller;
 
-  const _SteamLoginView({Key key, @required this.controller}) : super(key: key);
+  const _SteamLoginView({
+    Key key,
+    @required this.controller,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -155,8 +153,8 @@ class _SteamLoginView extends StatelessWidget {
               ],
             )));
           } else if (state is SteamUserLoaded) {
-            //Navigator.of(context).pushReplacement(HomeView);
-            print('TODO: how do we navigate to home from here?');
+            Navigator.popAndPushNamed(context, '/home',
+                arguments: state.steamUser);
           }
         },
         builder: (BuildContext context, state) {
